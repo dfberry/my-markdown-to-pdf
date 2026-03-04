@@ -1,12 +1,14 @@
 /* Simple, maintainable print stylesheet for resume PDF */
 :root{--body-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; --muted:#666}
 html,body{height:100%}
-body{font-family:var(--body-font); color:#111; font-size:11pt; line-height:1.35; margin:0; padding:20px}
+body{font-family:var(--body-font); color:#111; font-size:10pt; line-height:1.25; margin:0; padding:6px}
 header{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px}
-h1{font-size:18pt; margin:0}
-h2{font-size:11pt; margin:14px 0 6px}
-p{margin:6px 0}
-ul{margin:6px 0 6px 18px}
+h1{font-size:14pt; margin:0}
+h2{font-size:11pt; margin:10px 0 4px}
+h3{font-size:10pt; margin:8px 0 3px; font-weight:600}
+p{margin:4px 0}
+ul{margin:4px 0 4px 16px}
+li{margin-bottom:2px}
 .code, pre, code{background:#f6f8fa; padding:6px; border-radius:4px; font-family:monospace; font-size:10pt}
 .contact{font-size:9pt; color:var(--muted); margin-bottom:8px}
 .section{margin-top:8px}
@@ -14,6 +16,5 @@ ul{margin:6px 0 6px 18px}
 
 /* Print tweaks */
 @media print{
-  body{padding:12mm}
-  a::after{content: ' (' attr(href) ')'; color:var(--muted); font-size:9pt}
+  body{padding:8mm}
 }

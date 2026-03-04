@@ -1,0 +1,6 @@
+{
+  "universe": "blade-runner",
+  "allowlist": ["blade-runner"],
+  "max_team_size": 12,
+  "overflow": "diegetic-expansion"
+}

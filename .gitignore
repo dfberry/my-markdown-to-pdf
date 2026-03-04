@@ -1,0 +1,11 @@
+node_modules/
+dist/
+resumes/
+.DS_Store
+
+# Squad session-specific files (local machine paths, session logs)
+.squad/agents/*/history.md
+.squad/agents/*/history-archive.md
+.squad/log/
+.squad/orchestration-log/
+.squad/identity/now.md

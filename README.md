@@ -27,8 +27,21 @@ Notes
 - Styling is centralized in `templates/print.css` and intentionally minimal for maintainability.
 - The default input is `../../my-resume/2026-02-25-resume.md` relative to this project; pass a custom path as the first argument and an output filename as the second.
 
-Example:
+- The default input used previously was `../../my-resume/2026-02-25-resume.md`.
+
+Usage (pass path relative to project root)
 
 ```bash
-node render-pdf.js ../../my-resume/2026-02-25-resume.md my-resume.pdf
+# Build and run the compiled app
+npm run build
+npm run start -- resumes/2026-02-25-resume.md resume.pdf
+
+# Or use the ts-node wrappers (no build required)
+npm run pdf -- resumes/2026-02-25-resume.md resume.pdf
+npm run html -- resumes/2026-02-25-resume.md out.html
 ```
+
+Notes
+
+- All resume paths are relative to the project root (the folder containing [package.json](package.json)).
+- The first argument is the input Markdown file; the second argument is the output filename (PDF or HTML).
