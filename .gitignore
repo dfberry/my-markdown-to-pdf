@@ -1,7 +1,7 @@
 node_modules/
 dist/
 resumes/
-.DS_Store
+**/.DS_Store
 
 # Squad session-specific files (local machine paths, session logs)
 .squad/agents/*/history.md

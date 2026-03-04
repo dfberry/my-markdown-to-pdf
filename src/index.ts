@@ -13,7 +13,7 @@ async function main(): Promise<void> {
   }
 
   const md = fs.readFileSync(mdPath, 'utf8');
-  const html = await mdToHtml(md, { title: 'Geraldine Berry' });
+  const html = await mdToHtml(md, { title: 'Bob Smith' });
   const css = fs.existsSync(cssPath) ? fs.readFileSync(cssPath, 'utf8') : '';
 
   if (outPath.endsWith('.html')) {
