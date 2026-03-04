@@ -1,47 +1,51 @@
-Resume PDF generator (Markdown → clean HTML → PDF)
+# Resume PDF Generator
 
-Quick start
+Convert Markdown resumes to PDF or HTML with clean, professional styling.
 
-1. From this directory install dependencies:
+## Prerequisites
+
+- Node.js (LTS) and `npm` installed
+- Chrome or Chromium (required by Puppeteer for PDF generation)
+
+## Installation
 
 ```bash
 npm install
 ```
 
-2. Generate PDF (reads your local resume):
+## Usage
+
+You **must** provide two arguments: the input Markdown file and the output filename. The output format is determined by the file extension (`.pdf` or `.html`).
+
+Always use `--` to separate npm arguments from script arguments:
 
 ```bash
-npm run pdf
+# Generate PDF
+npm run pdf -- resumes/my-resume.md resume.pdf
+
+# Generate HTML
+npm run html -- resumes/my-resume.md resume.html
 ```
 
-3. During development, generate HTML to preview styling:
+Both `npm run pdf` and `npm run html` run the same TypeScript script (`ts-node src/index.ts`). The output format depends entirely on the file extension you provide.
+
+### Alternative: Run the compiled version
 
 ```bash
-npm run html
-# opens out.html in your browser to iterate quickly
-```
-
-Notes
-
-- The script `render-pdf.js` uses a small AST transform to ensure a top-level H1 and normalizes heading depth; add more remark/rehype plugins there to tune structure (callouts, code captions, etc.).
-- Styling is centralized in `templates/print.css` and intentionally minimal for maintainability.
-- The default input is `../../my-resume/2026-02-25-resume.md` relative to this project; pass a custom path as the first argument and an output filename as the second.
-
-- The default input used previously was `../../my-resume/2026-02-25-resume.md`.
-
-Usage (pass path relative to project root)
-
-```bash
-# Build and run the compiled app
 npm run build
-npm run start -- resumes/2026-02-25-resume.md resume.pdf
-
-# Or use the ts-node wrappers (no build required)
-npm run pdf -- resumes/2026-02-25-resume.md resume.pdf
-npm run html -- resumes/2026-02-25-resume.md out.html
+npm run start -- resumes/my-resume.md resume.pdf
 ```
 
-Notes
+## Notes
 
-- All resume paths are relative to the project root (the folder containing [package.json](package.json)).
-- The first argument is the input Markdown file; the second argument is the output filename (PDF or HTML).
+- **Resume location**: Add your Markdown resume files to the `resumes/` directory (this directory is gitignored for privacy).
+- **Paths are relative to the project root** (the folder containing `package.json`).
+- **Required arguments**: First argument = input Markdown file, second argument = output filename.
+- **Output format**: Use `.pdf` extension for PDF or `.html` extension for HTML output.
+
+## Architecture
+
+- **Entry point**: [src/index.ts](src/index.ts) — parses CLI args, reads Markdown and CSS, handles output format selection.
+- **Markdown → HTML**: `mdToHtml()` in [src/converter.ts](src/converter.ts) — uses `unified`, `remark-parse`, `remark-rehype`, `rehype-format`, `rehype-stringify`, and a heading normalization plugin to ensure consistent structure.
+- **HTML → PDF**: `htmlToPdf()` in [src/converter.ts](src/converter.ts) — renders full HTML with inline CSS from `templates/print.css` and converts to PDF using Puppeteer (headless browser). Supports `PUPPETEER_EXECUTABLE_PATH` environment variable to use a local Chrome/Chromium binary.
+- **Styling**: Centralized in `templates/print.css` — designed to be minimal and maintainable for easy customization.
