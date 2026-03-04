@@ -3,9 +3,17 @@ import path from 'path';
 import { mdToHtml, htmlToPdf } from './converter';
 
 async function main(): Promise<void> {
-  const mdPath = process.argv[2] || path.join('..', '..', 'my-resume', '2026-02-25-resume.md');
-  const outPath = process.argv[3] || 'resume.pdf';
-  const cssPath = path.join(__dirname, '..', 'templates', 'print.css');
+  const argIn = process.argv[2];
+  const argOut = process.argv[3];
+
+  if (!argIn || argIn === '-h' || argIn === '--help') {
+    console.error('Usage: npm run pdf -- <resume.md> [out.pdf]');
+    process.exit(2);
+  }
+
+  const mdPath = path.resolve(process.cwd(), argIn);
+  const outPath = path.resolve(process.cwd(), argOut || 'resume.pdf');
+  const cssPath = path.resolve(process.cwd(), 'templates', 'print.css');
 
   if (!fs.existsSync(mdPath)) {
     console.error('Markdown file not found:', mdPath);
@@ -13,7 +21,8 @@ async function main(): Promise<void> {
   }
 
   const md = fs.readFileSync(mdPath, 'utf8');
-  const html = await mdToHtml(md, { title: 'Bob Smith' });
+  const title = path.basename(mdPath, path.extname(mdPath));
+  const html = await mdToHtml(md, { title });
   const css = fs.existsSync(cssPath) ? fs.readFileSync(cssPath, 'utf8') : '';
 
   if (outPath.endsWith('.html')) {
