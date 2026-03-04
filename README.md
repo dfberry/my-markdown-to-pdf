@@ -277,6 +277,19 @@ export PUPPETEER_EXECUTABLE_PATH=/path/to/chromium
 npm run pdf -- resumes/my-document.md output.pdf
 ```
 
+Environment variables (.env.sample)
+
+- This repo includes a `.env.sample` file showing environment variables you can set to control Puppeteer behavior. Copy it to `.env` or export values in your shell.
+- Example (macOS):
+
+```bash
+# copy sample and edit
+cp .env.sample .env
+export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+npm run pdf -- resumes/my-document.md output.pdf
+```
+
+
 ### Arguments not passed correctly
 
 **Problem:** `Error: missing required arguments`

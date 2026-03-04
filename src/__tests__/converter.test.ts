@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { mdToHtml } from '../../converter'
+import { mdToHtml } from '../converter'
 
 describe('mdToHtml()', () => {
   it('converts basic markdown to expected HTML tags', async () => {
@@ -25,8 +25,8 @@ describe('mdToHtml()', () => {
   it('properly escapes special characters in content', async () => {
     const html = await mdToHtml('Some text with <script>alert("xss")</script> and & ampersand.\n')
     expect(html).not.toContain('<script>alert')
-    // Angle brackets in prose should be escaped
-    expect(html).toMatch(/&lt;|&amp;/)
+    // Angle brackets in prose should be escaped (rehype may use &amp; or &#x26; etc.)
+    expect(html).toMatch(/&lt;|&amp;|&#x/)
   })
 })
 

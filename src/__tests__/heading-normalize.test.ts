@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest'
-import { headingNormalizePlugin } from '../../plugins/heading-normalize'
+import { headingNormalizePlugin } from '../plugins/heading-normalize'
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
 
 function parseHeadings(markdown: string) {
   const processor = unified().use(remarkParse).use(headingNormalizePlugin)
-  return processor.parse(markdown)
+  return processor.runSync(processor.parse(markdown))
 }
 
 describe('headingNormalizePlugin', () => {
@@ -34,7 +34,7 @@ describe('headingNormalizePlugin', () => {
     const processor = unified()
       .use(remarkParse)
       .use(headingNormalizePlugin, { title: 'Jane Doe' })
-    const tree = processor.parse('Some paragraph text with no headings.')
+    const tree = processor.runSync(processor.parse('Some paragraph text with no headings.'))
     const headings = (tree as any).children.filter((n: any) => n.type === 'heading')
     expect(headings.length).toBeGreaterThan(0)
     expect(headings[0].depth).toBe(1)

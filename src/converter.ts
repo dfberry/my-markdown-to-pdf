@@ -12,9 +12,9 @@ export async function mdToHtml(md: string, opts: { title?: string } = {}): Promi
   const vfile = await unified()
     .use(remarkParse)
     .use(headingNormalizePlugin, { title: opts.title })
-    .use(remarkRehype, { allowDangerousHtml: true })
+    .use(remarkRehype)
     .use(rehypeFormat)
-    .use(rehypeStringify, { allowDangerousHtml: true })
+    .use(rehypeStringify)
     .process(md);
   return String(vfile);
 }
